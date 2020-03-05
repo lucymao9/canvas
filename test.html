@@ -1,0 +1,367 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<title>test</title>
+</head>
+<style type="text/css">
+	* {
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        height:100%;
+        width:100%;
+    }
+    canvas{
+        display:block;
+    }
+</style>
+<body>
+<canvas id="myCanvas">
+</canvas>
+<!-- style="border:1px solid #000000;" -->
+</body>
+<script type="text/javascript">
+	// var myCanvas=$("#myCanvas");
+
+	// myCanvas.attr('width',$('div').width());
+	// console.log(myCanvas)
+	// var ctx=myCanvas[0].getContext("2d");
+	// ctx.fillStyle="#FF0000";
+	// ctx.fillRect(0,0,150,75);
+	// ctx.moveTo(0,0);
+	// ctx.lineTo(200,100);
+	// ctx.stroke();
+	// ctx.beginPath();
+	// ctx.arc(95,50,40,0,2*Math.PI);
+	// ctx.stroke();
+	// const txt = 'EXPANDED';
+	// const canvas = {
+	// 	init() {
+	// 		this.elem = document.createElement("canvas");
+	// 		document.body.appendChild(this.elem);
+	// 		this.resize();
+	// 		window.addEventListener("resize", () => this.resize(), false);
+	// 		return this.elem.getContext("2d");
+	// 	},
+	// 	resize() {
+	// 		this.width = this.elem.width = this.elem.offsetWidth;
+	// 		this.height = this.elem.height = this.elem.offsetHeight;
+	// 		// let x = 0;
+	// 		// const sx = this.width / (txt.length + 1);
+	// 		// for (const p of points) {
+	// 		// 	p.x0 = x;
+	// 		// 	p.y0 = canvas.height / 2;
+	// 		// 	x += sx;
+	// 		// }
+	// 	}
+	// };	
+	// $.fn.els = function () {
+	// 	var mWidth=300;
+	// 	var mHeight=600;
+	// 	const ctx = canvas.init();
+	// 	// this.attr('width',$('div').width())
+	// 	// var ctx=this[0].getContext("2d");
+	// 	ctx.fillStyle="#000000";
+	// 	ctx.fillRect(0,0,canvas.width,canvas.height);
+	// 	ctx.fillStyle="#ffffff";
+	// 	ctx.fillRect((canvas.width-mWidth)/2,(canvas.height-mHeight)/2,mWidth,mHeight);
+	// 	// ctx.fillRect((canvasWidth-mWidth)/2+mWidth,0,(canvasWidth-mWidth)/2,canvasHeight);
+	// 	// ctx.fillRect((canvasWidth-mWidth)/2-1,(canvasHeight-mHeight)/2+mHeight,mWidth+2,(canvasHeight-mHeight)/2);
+	// 	// ctx.moveTo(0,0);
+	// 	// ctx.lineTo(200,100);
+	// 	// ctx.stroke();
+	// 	// ctx.beginPath();
+	// 	// ctx.arc(95,50,40,0,2*Math.PI);
+	// 	// ctx.stroke();
+	// }
+	// $("#myCanvas").els();
+
+	// function resize(obj){
+	// 	obj.attr('width',$('body').width())
+	// 	obj.attr('height',$('body').height())
+	// 	var ctx = obj[0].getContext("2d");
+	// 	ctx.width=$('body').width();
+	// 	ctx.height=$('body').height();
+	// 	ctx.fillStyle="#000000";
+	// 	ctx.fillRect(0,0,ctx.width,ctx.height);
+	// 	return ctx;
+	// }
+	// function randColor(type){
+	// 	var red=parseInt( Math.random()*256);
+	// 	var green=parseInt( Math.random()*256);
+	// 	var blue=parseInt( Math.random()*256);
+	// 	switch(type){
+	// 		case 2:
+	// 			return 'rgba('+red+','+green+','+blue+',0)';
+	// 			break;
+	// 		case 1:
+	// 		default:
+	// 			return 'rgb('+red+','+green+','+blue+')';
+	// 			break;
+	// 	}
+	// }
+	// function drawSpirograph(ctx,R,r,O){
+	// 	var x1 = R-O;
+	// 	var y1 = 0;
+	// 	var i  = 1;
+	// 	ctx.beginPath();
+	// 	ctx.moveTo(x1,y1);
+	// 	do {
+	// 		if (i>20000) break;
+	// 		var x2 = (R+r)*Math.cos(i*Math.PI/72) - (r+O)*Math.cos(((R+r)/r)*(i*Math.PI/72))
+	// 		var y2 = (R+r)*Math.sin(i*Math.PI/72) - (r+O)*Math.sin(((R+r)/r)*(i*Math.PI/72))
+	// 		ctx.lineTo(x2,y2);
+	// 		x1 = x2;
+	// 		y1 = y2;
+	// 		i++;
+	// 	} while (x2 != R-O && y2 != 0 );
+	// 	ctx.stroke();
+	// }
+	// function genBall(ctx){
+	// 	var startx=parseInt( Math.random()*ctx.width)+1;
+	// 	var starty=parseInt( Math.random()*ctx.height)+1;
+	// 	// var maxRadius=parseInt(Math.random()*100)+10;
+	// 	var startxPlus=parseInt( Math.random()*50)+1;
+	// 	var startyPlus=parseInt( Math.random()*50)+1;
+	// 	var radiusDiff = Math.sqrt(startxPlus*startxPlus+startyPlus*startyPlus);
+	// 	var maxRadius=parseInt(Math.random()*60)+radiusDiff+5;
+	// 	var minRadius=parseInt( Math.random()*Math.abs(maxRadius-radiusDiff))+1;
+	// 	// console.log(startx+','+starty+','+minRadius+','+(startx+startxPlus)+','+(starty+startyPlus)+','+maxRadius);
+	// 	var radgrad = ctx.createRadialGradient(startx,starty,minRadius,startx+startxPlus,starty+startyPlus,maxRadius);
+	// 	var stopPoint = 0.9;
+	// 	radgrad.addColorStop(0, randColor());
+	// 	radgrad.addColorStop(stopPoint, randColor());
+	// 	radgrad.addColorStop(1, randColor(2));
+	// 	ctx.fillStyle = radgrad;
+	// 	ctx.fillRect(0,0,ctx.width,ctx.height);
+	// }
+	// $.fn.test = function () {
+	// 	ctx = resize(this);
+		// var maxWidth=200;
+		// console.log((ctx.width-maxWidth)/2,(ctx.height-maxWidth)/2,(ctx.width-maxWidth)/2+maxWidth,(ctx.height-maxWidth)/2+maxWidth)
+		// var gradient=ctx.createLinearGradient((ctx.width-maxWidth)/2,(ctx.height-maxWidth)/2,(ctx.width-maxWidth)/2+maxWidth,maxWidth/2);
+		// gradient.addColorStop("0","magenta");
+		// gradient.addColorStop("0.5","blue");
+		// gradient.addColorStop("1.0","red");
+		// ctx.fillStyle=gradient;
+		// ctx.fillRect((ctx.width-maxWidth)/2,(ctx.height-maxWidth)/2,(ctx.width-maxWidth)/2+maxWidth,(ctx.height-maxWidth)/2+maxWidth);
+		// ctx.font="200px Georgia";
+		// ctx.fillText('ET',(ctx.width-maxWidth)/2,(ctx.height-maxWidth)/2+maxWidth,maxWidth);
+		// window.addEventListener("resize", () => resize(this), false);
+		// genBall(ctx);
+		// ctx.strokeStyle = "#ffffff";
+		// ctx.lineWidth = 1.5;
+		// ctx.fillRect(0,0,300,300);
+		// ctx.save()
+		// ctx.translate(50,50);
+		// drawSpirograph(ctx,22,6,5);
+
+		// ctx.translate(100,0);
+		// ctx.scale(0.75,0.75);
+		// drawSpirograph(ctx,22,6,5);
+		// 
+		// ctx.translate(ctx.width/2,ctx.height/2);
+
+  // for (var i=1;i<6;i++){ // Loop through rings (from inside to out)
+  //   ctx.save();
+  //   ctx.fillStyle = 'rgb('+(51*i)+','+(255-51*i)+',255)';
+
+  //   for (var j=0;j<i*6;j++){ // draw individual dots
+  //     ctx.rotate(Math.PI*2/(i*6));
+  //     ctx.scale(1.05,1.05);
+  //     ctx.beginPath();
+  //     ctx.arc(0,i*12.5,5,0,Math.PI*2,true);
+  //     ctx.fill();
+  //   }
+
+  //   ctx.restore();
+  // }
+
+		// for (var i = 100 - 1; i >= 0; i--) {
+		// 	genBall(ctx);
+		// }
+
+		// var radgrad = ctx.createRadialGradient(45,45,10,52,50,30);
+		// var radgrad = ctx.createRadialGradient(ctx.width/2,ctx.height/2,10,ctx.width/2+10,ctx.height/2+10,30);
+		// radgrad.addColorStop(0, '#A7D30C');
+		// radgrad.addColorStop(0.9, '#019F62');
+		// radgrad.addColorStop(1, 'rgba(1,159,98,0)');
+
+		// var radgrad2 = ctx.createRadialGradient(105,105,20,112,120,50);
+		// var radgrad2 = ctx.createRadialGradient(ctx.width/2,ctx.height/2,20,ctx.width/2+10,ctx.height/2+10,50);
+		// radgrad2.addColorStop(0, '#FF5F98');
+		// radgrad2.addColorStop(0.75, '#FF0188');
+		// radgrad2.addColorStop(1, 'rgba(255,1,136,0)');
+
+		// var radgrad3 = ctx.createRadialGradient(95,15,15,102,20,40);
+		// var radgrad3 = ctx.createRadialGradient(ctx.width/2,ctx.height/2,10,ctx.width/2+10,ctx.height/2+10,30);
+		// radgrad3.addColorStop(0, '#00C9FF');
+		// radgrad3.addColorStop(0.8, '#00B5E2');
+		// radgrad3.addColorStop(1, 'rgba(0,201,255,0)');
+
+		// var radgrad4 = ctx.createRadialGradient(0,150,50,0,140,90);
+		// var radgrad4 = ctx.createRadialGradient(ctx.width/2,ctx.height/2,10,ctx.width/2+10,ctx.height/2+10,30);
+		// radgrad4.addColorStop(0, '#F4F201');
+		// radgrad4.addColorStop(0.8, '#E4C700');
+		// radgrad4.addColorStop(1, 'rgba(228,199,0,0)');
+		// ctx.fillStyle = radgrad4;
+		// ctx.fillRect(0,0,ctx.width,ctx.width);
+		// ctx.fillStyle = radgrad3;
+		// ctx.fillRect(0,0,ctx.width,ctx.width);
+		// ctx.fillStyle = radgrad2;
+		// ctx.fillRect(0,0,ctx.width,ctx.width);
+		// ctx.fillStyle = radgrad;
+		// ctx.fillRect(0,0,ctx.width,ctx.width);
+	<!-- } -->
+	// $("#myCanvas").test();
+	function initCanvas(){
+		$('canvas').attr('width',$('body').width());
+		$('canvas').attr('height',$('body').height());
+		var ctx = $('canvas')[0].getContext("2d");
+		ctx.width = $('body').width();
+		ctx.height = $('body').height();
+		// console.log(ctx)
+		return ctx;
+	}
+	function draw(){
+		// ctx = resize($('canvas'));
+		ctx = initCanvas();
+		ctx.clearRect(0,0,ctx.width,ctx.height);
+		ctx.fillStyle = '#000000';
+		ctx.fillRect(0,0,ctx.width,ctx.height);
+		ctx.save();
+		drawPlate(ctx);
+		drawHour(ctx);
+		drawMinute(ctx);
+		drawSecond(ctx);
+
+	}
+	function drawPlate(ctx){
+		ctx.beginPath();
+		ctx.strokeStyle = '#ffffff';
+		ctx.arc(ctx.width/2,ctx.height/2,ctx.height/2-100,0,2*Math.PI);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.fillStyle = '#ffffff';
+		ctx.arc(ctx.width/2,ctx.height/2,5,0,2*Math.PI);
+		ctx.fill();
+		ctx.save();
+		ctx.translate(ctx.width/2,ctx.height/2);
+		for (var i = 1; i <= 60; i++) {
+			ctx.beginPath();
+			ctx.rotate(2*Math.PI/60);
+			ctx.fillStyle = '#ffffff';
+			var len = -10;
+			if(i%10==0){
+				len = -20;
+			}else if(i%5==0){
+				len = -15;
+			}
+			ctx.fillRect(0,-ctx.height/2+104-len,1,len);
+		}
+		ctx.translate(0,0);
+		// ctx.restore();
+	}
+	function drawSecond(ctx){
+		ctx.restore();
+		ctx.beginPath();
+		ctx.fillStyle = 'red';
+		var d = new Date();
+		var sec = d.getSeconds();
+		// ctx.translate(ctx.width/2,ctx.height/2);
+		ctx.rotate(0);
+		ctx.rotate(2*Math.PI/60*sec);
+		ctx.fillRect(-1,0,2,-ctx.height/2+130);
+	}
+	function drawMinute(){
+		ctx.restore();
+		ctx.beginPath();
+		ctx.fillStyle = 'blue';
+		var d = new Date();
+		var sec = d.getSeconds();
+		var min = d.getMinutes();
+		ctx.translate(ctx.width/2,ctx.height/2);
+		ctx.rotate(0);
+		ctx.rotate(2*Math.PI/3600*(min*60+sec));
+		ctx.fillRect(-2,0,4,-ctx.height/2+190);
+	}
+	function drawHour(){
+		ctx.restore();
+		ctx.beginPath();
+		ctx.fillStyle = 'white';
+		var d = new Date();
+		var sec = d.getSeconds();
+		var min = d.getMinutes();
+		var hour = d.getHours();
+		ctx.translate(ctx.width/2,ctx.height/2);
+		ctx.rotate(0);
+		ctx.rotate(2*Math.PI/3600/12*(hour*3600+min*60+sec));
+		ctx.fillRect(-3,0,6,-ctx.height/2+250);		
+	}
+	// draw();
+	// requestAnimationFrame(draw);
+	// setInterval(draw,10);
+	// 
+	var img = new Image();
+
+// User Variables - customize these to change the image being scrolled, its
+// direction, and the speed.
+
+img.src = 'Capitan_Meadows,_Yosemite_National_Park.jpg';
+var CanvasXSize = 800;
+var CanvasYSize = 200;
+var speed = 30; //lower is faster
+var scale = 1.05;
+var y = -4.5; //vertical offset
+
+// Main program
+
+var dx = 0.75;
+var imgW;
+var imgH;
+var x = 0;
+var clearX;
+var clearY;
+var ctx;
+
+img.onload = function() {
+    imgW = img.width*scale;
+    imgH = img.height*scale;
+    if (imgW > CanvasXSize) { x = CanvasXSize-imgW; } // image larger than canvas
+    if (imgW > CanvasXSize) { clearX = imgW; } // image larger than canvas
+    else { clearX = CanvasXSize; }
+    if (imgH > CanvasYSize) { clearY = imgH; } // image larger than canvas
+    else { clearY = CanvasYSize; }
+    //Get Canvas Element
+    ctx = document.getElementById('myCanvas').getContext('2d');
+    //Set Refresh Rate
+    return setInterval(draw, speed);
+}
+
+function draw() {
+    //Clear Canvas
+    ctx.clearRect(0,0,clearX,clearY);
+    //If image is <= Canvas Size
+    if (imgW <= CanvasXSize) {
+        //reset, start from beginning
+        if (x > (CanvasXSize)) { x = 0; }
+        //draw aditional image
+        if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-CanvasXSize+1,y,imgW,imgH); }
+    }
+    //If image is > Canvas Size
+    else {
+        //reset, start from beginning
+        if (x > (CanvasXSize)) { x = CanvasXSize-imgW; }
+        //draw aditional image
+        if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-imgW+1,y,imgW,imgH); }
+    }
+    //draw image
+    ctx.drawImage(img,x,y,imgW,imgH);
+    //amount to move
+    x += dx;
+}
+</script>
+</html>

@@ -1,0 +1,84 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<title>swim-ET</title>
+</head>
+<style type="text/css">
+	* {
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        height:100%;
+        width:100%;
+    }
+    canvas{
+        display:block;
+    }
+</style>
+<body>
+<canvas></canvas>
+</body>
+<script type="text/javascript">
+	$('canvas').attr('width',$('body').width());
+	$('canvas').attr('height',$('body').height());
+	var canvas=$('canvas')[0];
+	var ctx = canvas.getContext("2d");
+	var run = true;
+	ctx.fillStyle = '#000000';
+	ctx.fillRect(0,0,canvas.width,canvas.height);
+	function clear() {
+	  ctx.fillStyle = 'rgba(0,0,0,0.1)';
+	  ctx.fillRect(0,0,canvas.width,canvas.height);
+	}
+	function initCanvas(){
+		// ctx.save();
+		clear();
+		return ctx;
+	}
+	var ball = {
+		x:canvas.width/2,
+		y:canvas.height/2,
+		r:10,
+		color:'rgba(206,256,256)',
+		// color:'#7AEBEB'
+	}
+	canvas.addEventListener('mousemove', function(e){
+		if(run){
+			ball.x=e.clientX;
+			ball.y=e.clientY;
+			draw();
+		}
+	},false);
+	canvas.addEventListener('click', function(e){
+		if(run){
+			cancelAnimationFrame(draw);
+		}else{
+			ball.x=e.clientX;
+			ball.y=e.clientY;
+			requestAnimationFrame(draw);
+		}
+		run = !run;
+	},false);
+	function draw(){
+		ctx = initCanvas();
+		genBall();
+
+		requestAnimationFrame(draw);
+	}
+	function genBall(){
+		// console.log(ball);
+		// ctx.restore()
+		ctx.beginPath();
+		ctx.fillStyle = ball.color;
+		var randx=Math.random()*60-30;
+		var randy=Math.random()*60-30;
+		var randr=Math.random()*16-8;
+		ctx.arc(ball.x+randx,ball.y+randy,ball.r+randr,0,2*Math.PI);
+		ctx.fill();
+	}
+	draw();
+	// requestAnimationFrame(draw);
+</script>
+</html>

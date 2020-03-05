@@ -1,0 +1,66 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<title>fall-ET</title>
+</head>
+<style type="text/css">
+	* {
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        height:100%;
+        width:100%;
+    }
+    canvas{
+        display:block;
+    }
+</style>
+<body>
+<canvas></canvas>
+</body>
+<script type="text/javascript">
+	$('canvas').attr('width',$('body').width());
+	$('canvas').attr('height',$('body').height());
+	var canvas=$('canvas')[0];
+	var ctx = canvas.getContext("2d");
+	var img = new Image();
+	img.src='Capitan_Meadows,_Yosemite_National_Park.jpg';
+	var speed = 20;
+	var x = 0;
+	var y = 0;
+	var step = 1;
+	var scale=2;
+	var imgW = 0;
+	var imgH = 0;
+
+	function initCanvas(){
+		// ctx.save();
+		ctx.clearRect(0,0,canvas.width,canvas.height);
+		ctx.fillStyle = '#ffffff';
+		ctx.fillRect(0,0,canvas.width,canvas.height);
+		return ctx;
+	}
+	img.onload = function(){
+		// initCanvas()
+		imgW = img.width*scale;
+		imgH = img.height*scale;
+		y=(canvas.height-imgH)/2;
+		
+		setInterval(draw,speed);
+	}
+	
+	function draw(){
+		ctx = initCanvas();
+		if(x-imgW>0) x=0;
+		ctx.drawImage(img,x-imgW,y,imgW,imgH);
+		ctx.drawImage(img,x,y,imgW,imgH);
+		x+=step;
+	}
+
+
+	// draw();
+	// requestAnimationFrame(draw);
+</script>
+</html>

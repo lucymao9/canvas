@@ -1,0 +1,118 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<title>fall-ET</title>
+</head>
+<style type="text/css">
+	* {
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        height:100%;
+        width:100%;
+    }
+    canvas{
+        display:block;
+    }
+</style>
+<body>
+<canvas></canvas>
+</body>
+<script type="text/javascript">
+	$('canvas').attr('width',$('body').width());
+	$('canvas').attr('height',$('body').height());
+	var canvas=$('canvas')[0];
+	var ctx = canvas.getContext("2d");
+	var run = true;
+	function initCanvas(){
+		// ctx.save();
+		ctx.clearRect(0,0,canvas.width,canvas.height);
+		ctx.fillStyle = '#000000';
+		ctx.fillRect(0,0,canvas.width,canvas.height);
+		return ctx;
+	}
+	var letters = [];
+	function genLatter(){
+		if(letters.length<400){
+			for (var i = 0; i < 400-letters.length; i++) {
+				letters.push({
+					text:String.fromCharCode(parseInt(Math.random()*25+65)),
+					x:Math.random()*(canvas.width-30),
+					y:Math.random()*50-100,
+					xa:0,
+					ya:Math.random()*6+1,
+					size:35,
+					font:'Consolas',
+					angle:0,
+					color:randColor(),
+					max:70,
+				});
+			}
+		}
+	}
+	function randColor(){
+		var red=parseInt( Math.random()*200+56);
+		var green=parseInt( Math.random()*200+56);
+		var blue=parseInt( Math.random()*200+56);
+		return 'rgb('+red+','+green+','+blue+')';
+	}	
+	var mouse={
+		x:null,
+		y:null,
+		max:120,
+	}
+	window.onmousemove = function(e){
+        e = e || window.event;
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    };
+    window.onmouseout = function(e){
+        mouse.x = null;
+        mouse.y = null;
+    };
+	function draw(){
+		ctx = initCanvas();
+		// console.log(1);
+		genLatter();
+		for (var i = 0; i < letters.length; i++) {
+			var xc = mouse.x-letters[i].x;
+			var yc = mouse.y-letters[i].y;
+			var jsd = 2*mouse.max*mouse.max/(xc*xc+yc*yc);
+			jsd = jsd>8?8:jsd;
+			var xz = Math.PI/32*mouse.max*mouse.max/(xc*xc+yc*yc);
+			if(xc*xc+yc*yc<mouse.max*mouse.max && mouse.x!=null && mouse.y!=null) {
+				if(xc>0) {
+					letters[i].xa =-jsd;
+					letters[i].angle=xz;
+				}
+				if(xc<=0) {
+					letters[i].xa =jsd;
+					letters[i].angle=-xz;
+				}
+			}
+			letters[i].x += letters[i].xa;
+			letters[i].y += letters[i].ya;
+			letters[i].xa *= letters[i].x>canvas.width||letters[i].x<=0?-1:1;
+			// letters[i].ya *= letters[i].y>canvas.height||letters[i].y<0?-1:1;
+			if(letters[i].y-letters[i].size/2>canvas.height){
+				letters.splice(i, 1);
+			}
+			ctx.save();
+			ctx.fillStyle=letters[i].color;
+			ctx.font =letters[i].size+'px '+letters[i].font;
+			ctx.translate(letters[i].x-1,letters[i].y-1);
+			ctx.rotate(letters[i].angle);
+			ctx.fillText(letters[i].text,-1,-1);
+			ctx.restore();
+		}
+
+		requestAnimationFrame(draw);
+	}
+
+
+	draw();
+	// requestAnimationFrame(draw);
+</script>
+</html>

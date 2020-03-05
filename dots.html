@@ -1,0 +1,125 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<title>dots-ET</title>
+</head>
+<style type="text/css">
+	* {
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        height:100%;
+        width:100%;
+    }
+    canvas{
+        display:block;
+    }
+</style>
+<body>
+<canvas></canvas>
+</body>
+<script type="text/javascript">
+	$('canvas').attr('width',$('body').width());
+	$('canvas').attr('height',$('body').height());
+	var canvas=$('canvas')[0];
+	var ctx = canvas.getContext("2d");
+	var r=0;
+	var br=255-r;
+	var g=0;
+	var bg=255-g;
+	var b=0;
+	var bb=255-b;
+	var black = '#000000';
+	var white = '#ffffff';
+	var dotcolor = 'rgba('+r+','+g+','+b+')';
+	function initCanvas(){
+		// ctx.save();
+		ctx.clearRect(0,0,canvas.width,canvas.height);
+		ctx.fillStyle = 'rgba('+br+','+bg+','+bb+')';
+		ctx.fillRect(0,0,canvas.width,canvas.height);
+		return ctx;
+	}
+	var dots = [];
+	for (var i = 0; i < 300; i++) {
+		dots.push({
+			x:Math.random()*canvas.width,
+			y:Math.random()*canvas.height,
+			xa:Math.random()*2-1,
+			ya:Math.random()*2-1,
+			color:'rgba('+r+','+g+','+b+')',
+			max:70,
+		});
+	}
+	var mouse={
+		x:null,
+		y:null,
+		max:100,
+	}
+	window.onmousemove = function(e){
+        e = e || window.event;
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    };
+    window.onmouseout = function(e){
+        mouse.x = null;
+        mouse.y = null;
+    };
+	window.onclick = function(e){
+		genrandomcolor()
+    };
+    function genrandomcolor(){
+    	r=Math.random()*100+1;
+		br=255-r;
+		g=Math.random()*100+1;
+		bg=255-g;
+		b=Math.random()*100+1;
+		bb=255-b;
+    }
+	function draw(){
+		ctx = initCanvas();
+		var ndots  = [mouse].concat(dots);
+		for (var i = 0; i < dots.length; i++) {
+			dots[i].x += dots[i].xa;
+			dots[i].y += dots[i].ya;
+			dots[i].xa *= dots[i].x>canvas.width||dots[i].x<0?-1:1;
+			dots[i].ya *= dots[i].y>canvas.height||dots[i].y<0?-1:1;
+			// console.log(dotcolor);
+			// if(dotcolor!=null){
+			dots[i].color='rgba('+r+','+g+','+b+')';
+			// }
+			ctx.fillStyle=dots[i].color;
+
+			// ctx.fillText('et',dots[i].x-1,dots[i].y-1);
+			ctx.fillRect(dots[i].x-1,dots[i].y-1,2,2);
+			for (var j = 0; j < ndots.length; j++) {
+				if(ndots[j]==dots[i] || ndots[j].x === null || ndots[j].y === null) continue;
+				var xc = ndots[j].x-dots[i].x;
+				var yc = ndots[j].y-dots[i].y;
+				var dis = Math.sqrt(xc*xc+yc*yc);
+				if(dis<ndots[j].max){
+					if (ndots[j] === mouse && dis > (ndots[j].max / 2)) {
+                        dots[i].x += xc * 0.03;
+                        dots[i].y += yc * 0.03;
+                    }
+	                ratio = (ndots[j].max - dis) / ndots[j].max;
+
+	                ctx.beginPath();
+	                ctx.lineWidth = ratio/2;
+	                ctx.strokeStyle = 'rgba('+r+','+g+','+b+',' + (ratio + 0.2) + ')';
+	                ctx.moveTo(dots[i].x , dots[i].y);
+	                ctx.lineTo(ndots[j].x , ndots[j].y);
+	                ctx.stroke();
+				}
+			}
+			ndots.splice(ndots.indexOf(dots[i]), 1);
+		}
+
+		requestAnimationFrame(draw);
+	}
+
+	draw();
+	// requestAnimationFrame(draw);
+</script>
+</html>

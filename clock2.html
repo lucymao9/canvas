@@ -1,0 +1,141 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<title>clock2-ET</title>
+</head>
+<style type="text/css">
+	* {
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        height:100%;
+        width:100%;
+    }
+    canvas{
+        display:block;
+    }
+</style>
+<body>
+<canvas></canvas>
+</body>
+<script type="text/javascript">
+	$('canvas').attr('width',$('body').width());
+	$('canvas').attr('height',$('body').height());
+	var canvas=$('canvas')[0];
+	var ctx = canvas.getContext("2d");
+	var run = true;
+
+	function initCanvas(){
+		var d = new Date();
+		var sec = d.getSeconds();
+		var min = d.getMinutes();
+		var hour = d.getHours();
+		ctx.clearRect(0,0,canvas.width,canvas.height);
+		ctx.save();
+		ctx.shadowOffsetX=3;
+		ctx.shadowOffsetY=1;
+		ctx.shadowBlur=5;
+		ctx.shadowColor='#111111';
+		ctx.arc(canvas.width/2,canvas.height/2-30,10,0,2*Math.PI);
+		ctx.arc(canvas.width/2,canvas.height/2+30,10,0,2*Math.PI);
+		ctx.fill();
+		// ctx.fillRect(canvas.width/2-140,canvas.height/2-73,90,70);
+		// ctx.fillRect(canvas.width/2-250,canvas.height/2-73,90,70);
+		// ctx.fillRect(canvas.width/2-140,canvas.height/2+3,90,70);
+		// ctx.fillRect(canvas.width/2-250,canvas.height/2+3,90,70);
+		// ctx.fillRect(canvas.width/2+50,canvas.height/2-73,90,70);
+		// ctx.fillRect(canvas.width/2+160,canvas.height/2-73,90,70);
+		// ctx.fillRect(canvas.width/2+50,canvas.height/2+3,90,70);
+		// ctx.fillRect(canvas.width/2+160,canvas.height/2+3,90,70);
+		// ctx.restore();
+		// ctx.save();
+		ctx.font="150px Verdana";
+		ctx.fillStyle='black';
+		if(hour<10){
+			ctx.fillText('0',canvas.width/2-255,canvas.height/2+55);
+		}else{
+			ctx.fillText(parseInt(hour/10),canvas.width/2-255,canvas.height/2+55);
+		}
+		ctx.fillText(hour%10,canvas.width/2-145,canvas.height/2+55);
+
+		if(min<10){
+			ctx.fillText('0',canvas.width/2+50,canvas.height/2+55);
+		}else{
+			ctx.fillText(parseInt(min/10),canvas.width/2+50,canvas.height/2+55);
+		}
+		ctx.fillText(min%10,canvas.width/2+160,canvas.height/2+55);
+
+		// ctx.restore();
+		return ctx;
+	}
+
+	function initCanvas2(){
+		var d = new Date();
+		var sec = d.getSeconds();
+		var min = d.getMinutes();
+		var hour = d.getHours();
+		ctx.clearRect(0,0,canvas.width,canvas.height);
+		ctx.save();
+		ctx.shadowOffsetX=3;
+		ctx.shadowOffsetY=1;
+		ctx.shadowBlur=5;
+		ctx.shadowColor='#222222';
+		ctx.beginPath();
+		ctx.arc(canvas.width/2+160,canvas.height/2-30,10,0,2*Math.PI);
+		ctx.arc(canvas.width/2+160,canvas.height/2+30,10,0,2*Math.PI);
+		ctx.fill();
+		ctx.beginPath();
+		ctx.arc(canvas.width/2-60,canvas.height/2-30,10,0,2*Math.PI);
+		ctx.arc(canvas.width/2-60,canvas.height/2+30,10,0,2*Math.PI);
+		ctx.fill()
+		ctx.font="150px Verdana";
+		ctx.fillStyle='#111111';
+		if(hour<10){
+			ctx.fillText('0',canvas.width/2-255,canvas.height/2+55);
+		}else{
+			ctx.fillText(parseInt(hour/10),canvas.width/2-255,canvas.height/2+55);
+		}
+		ctx.fillText(hour%10,canvas.width/2-170,canvas.height/2+55);
+
+		if(min<10){
+			ctx.fillText('0',canvas.width/2-50,canvas.height/2+55);
+		}else{
+			ctx.fillText(parseInt(min/10),canvas.width/2-45,canvas.height/2+55);
+		}
+		ctx.fillText(min%10,canvas.width/2+45,canvas.height/2+55);
+
+		if(sec<10){
+			ctx.fillText('0',canvas.width/2+175,canvas.height/2+55);
+		}else{
+			ctx.fillText(parseInt(sec/10),canvas.width/2+175,canvas.height/2+55);
+		}
+		ctx.fillText(sec%10,canvas.width/2+260,canvas.height/2+55);		
+
+		// ctx.restore();
+		return ctx;
+	}
+	function draw(){
+		// ctx = initCanvas();
+		ctx = initCanvas2();
+		// genBall();
+
+		// requestAnimationFrame(draw);
+	}
+	// function genBall(){
+	// 	// console.log(ball);
+	// 	// ctx.restore()
+	// 	ctx.beginPath();
+	// 	ctx.fillStyle = ball.color;
+	// 	var randx=Math.random()*60-30;
+	// 	var randy=Math.random()*60-30;
+	// 	var randr=Math.random()*16-8;
+	// 	ctx.arc(ball.x+randx,ball.y+randy,ball.r+randr,0,2*Math.PI);
+	// 	ctx.fill();
+	// }
+	// draw();
+	setInterval(draw,10);
+	// requestAnimationFrame(draw);
+</script>
+</html>
